@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """Where the app is created"""
 
 from flask import Flask, jsonify

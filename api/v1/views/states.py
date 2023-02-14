@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """ state module """
 
 from api.v1.views import app_views
