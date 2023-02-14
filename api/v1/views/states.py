@@ -9,6 +9,7 @@ from models.state import State
 
 @app_views.route("/states/", methods=["GET", "POST"])
 def states():
+    """ get all states or create a new state"""
     if request.method == "POST":
         body = request.get_json()
         if not body:
@@ -27,6 +28,7 @@ def states():
 
 @app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"])
 def state(state_id):
+    """update, delete or read a state"""
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -34,7 +36,6 @@ def state(state_id):
         body = request.get_json()
         if not body:
             return make_response(jsonify({"error": "Not a JSON"}), 400)
-        print(body)
         for k, v in body.items():
             if k not in ['id', 'created_at', 'updated']:
                 setattr(state, k, v)
