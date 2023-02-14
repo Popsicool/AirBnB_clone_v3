@@ -2,23 +2,45 @@
 """ state module """
 
 from api.v1.views import app_views
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 from models import storage
 from models.state import State
 
-@app_views.route("/states")
+
+@app_views.route("/states/", methods=["GET", "POST"])
 def states():
+    if request.method == "POST":
+        body = request.get_json()
+        if not body:
+            return make_response(jsonify({"error": "Not a JSON"}), 400)
+        if "name" not in body:
+            return make_response(jsonify({"error": "Missing name"}), 400)
+        new_state = State(**body)
+        new_state.save()
+        return jsonify(new_state.to_dict()), 201
     all_states = storage.all("State")
     states_all = []
     for k, v in all_states.items():
         states_all.append(v.to_dict())
     return jsonify(states_all)
 
-@app_views.route("/states/<state_id>", methods=["GET", "DELETE"])
+
+@app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"])
 def state(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
+    if request.method == 'PUT':
+        body = request.get_json()
+        if not body:
+            return make_response(jsonify({"error": "Not a JSON"}), 400)
+        print(body)
+        for k, v in body.items():
+            if k not in ['id', 'created_at', 'updated']:
+                setattr(state, k, v)
+                # body[k] = v
+        storage.save()
+        return jsonify(state.to_dict())
     if request.method == 'DELETE':
         state.delete()
         storage.save()

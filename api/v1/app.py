@@ -10,15 +10,18 @@ import os
 app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix='/api/v1')
 
+
 @app.teardown_appcontext
 def teardown(self):
     """remove sqlAlchemy session"""
     storage.close()
 
+
 @app.errorhandler(404)
 def error404(error):
     """404 handling"""
     return jsonify({"error": "Not found"}), 404
+
 
 if __name__ == "__main__":
     """run the app if its from main and not imported"""
