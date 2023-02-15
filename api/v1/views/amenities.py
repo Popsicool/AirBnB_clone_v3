@@ -24,7 +24,7 @@ def all_amenities():
         new_amenity = Amenity(**body)
         new_amenity.save()
         return jsonify(new_amenity.to_dict()), 201
-    all_amen = storage.all("State")
+    all_amen = storage.all("Amenity")
     amenities_all = []
     for k, v in all_amen.items():
         amenities_all.append(v.to_dict())
