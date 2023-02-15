@@ -9,7 +9,10 @@ from models.city import City
 from models.amenity import Amenity
 
 
-@app_views.route("/amenities", methods=["GET", "POST"])
+r7 = "/amenities/<amenity_id>"
+
+
+@app_views.route("/amenities", methods=["GET", "POST"], strict_slashes=False)
 def all_amenities():
     """Get all amenities"""
     if request.method == "POST":
@@ -28,7 +31,7 @@ def all_amenities():
     return jsonify(amenities_all)
 
 
-@app_views.route("/amenities/<amenity_id>", methods=["GET", "DELETE", "PUT"])
+@app_views.route(r7, methods=["GET", "DELETE", "PUT"], strict_slashes=False)
 def amenity(amenity_id):
     """single amenity"""
     amenity = storage.get(Amenity, amenity_id)

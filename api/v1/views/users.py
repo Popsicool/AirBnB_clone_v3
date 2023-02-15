@@ -7,7 +7,10 @@ from models import storage
 from models.user import User
 
 
-@app_views.route("/users", methods=["GET", "POST"])
+r9 = "users/<user_id>"
+
+
+@app_views.route("/users", methods=["GET", "POST"], strict_slashes=False)
 def users():
     """ get all users or create a new user"""
     if request.method == "POST":
@@ -28,7 +31,7 @@ def users():
     return jsonify(users_all)
 
 
-@app_views.route("users/<user_id>", methods=["GET", "DELETE", "PUT"])
+@app_views.route(r9, methods=["GET", "DELETE", "PUT"], strict_slashes=False)
 def user(user_id):
     """update, delete or read a user"""
     user = storage.get(User, user_id)

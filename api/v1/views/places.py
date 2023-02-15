@@ -9,7 +9,11 @@ from models.city import City
 from models.user import User
 
 
-@app_views.route("cities/<city_id>/places", methods=["GET", "POST"])
+r3 = "cities/<city_id>/places"
+r4 = "places/<place_id>"
+
+
+@app_views.route(r3, methods=["GET", "POST"], strict_slashes=False)
 def city_places(city_id):
     """City Places"""
     city = storage.get(City, city_id)
@@ -37,7 +41,7 @@ def city_places(city_id):
     return jsonify(all_places)
 
 
-@app_views.route("places/<place_id>", methods=["GET", "PUT", "DELETE"])
+@app_views.route(r4, methods=["GET", "PUT", "DELETE"], strict_slashes=False)
 def place_by_id(place_id):
     place = storage.get(Place, place_id)
     if not place:

@@ -8,7 +8,11 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route("states/<string:state_id>/cities", methods=["GET", "POST"])
+m1 = ["GET", "POST"]
+r1 = "states/<string:state_id>/cities"
+
+
+@app_views.route(r1, methods=m1, strict_slashes=False)
 def states_cities(state_id):
     """states city"""
     state = storage.get(State, state_id)
@@ -30,7 +34,10 @@ def states_cities(state_id):
     return jsonify(all_cities)
 
 
-@app_views.route("cities/<city_id>", methods=["GET", "PUT", "DELETE"])
+c_method = ["GET", "PUT", "DELETE"]
+
+
+@app_views.route("cities/<city_id>", methods=c_method, strict_slashes=False)
 def city_by_id(city_id):
     city = storage.get(City, city_id)
     if not city:

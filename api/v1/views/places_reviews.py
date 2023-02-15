@@ -10,7 +10,11 @@ from models.user import User
 from models.review import Review
 
 
-@app_views.route("places/<place_id>/reviews", methods=["GET", "POST"])
+r5 = "places/<place_id>/reviews"
+r6 = "reviews/<review_id>"
+
+
+@app_views.route(r5, methods=["GET", "POST"], strict_slashes=False)
 def places_review(place_id):
     """Places review"""
     place = storage.get(Place, place_id)
@@ -38,7 +42,7 @@ def places_review(place_id):
     return jsonify(all_reviews)
 
 
-@app_views.route("reviews/<review_id>", methods=["GET", "PUT", "DELETE"])
+@app_views.route(r6, methods=["GET", "PUT", "DELETE"], strict_slashes=False)
 def review_by_id(review_id):
     review = storage.get(Review, review_id)
     if not review:

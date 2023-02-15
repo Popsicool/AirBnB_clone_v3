@@ -7,7 +7,10 @@ from models import storage
 from models.state import State
 
 
-@app_views.route("/states/", methods=["GET", "POST"])
+r8 = "/states/<state_id>"
+
+
+@app_views.route("/states/", methods=["GET", "POST"], strict_slashes=False)
 def states():
     """ get all states or create a new state"""
     if request.method == "POST":
@@ -26,7 +29,7 @@ def states():
     return jsonify(states_all)
 
 
-@app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"])
+@app_views.route(r8, methods=["GET", "DELETE", "PUT"], strict_slashes=False)
 def state(state_id):
     """update, delete or read a state"""
     state = storage.get(State, state_id)
