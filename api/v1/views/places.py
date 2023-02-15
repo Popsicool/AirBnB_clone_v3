@@ -64,7 +64,7 @@ def place_by_id(place_id):
     return jsonify(place.to_dict())
 
 
-@app_views.route("/places_search", methods=["GET", "POST", "DELETE"],
+@app_views.route("/places_search", methods=["POST"],
                  strict_slashes=False)
 def places_search():
     if request.method == "POST":
