@@ -14,6 +14,7 @@ def status():
 
 @app_views.route("/stats", strict_slashes=False)
 def stats():
+    """stats"""
     all = {"amenities": "Amenity", "cities": "City", "places": "Place",
            "reviews": "Review", "states": "State", "users": "User"}
     all_stat = {}

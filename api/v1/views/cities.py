@@ -39,6 +39,7 @@ c_method = ["GET", "PUT", "DELETE"]
 
 @app_views.route("cities/<city_id>", methods=c_method, strict_slashes=False)
 def city_by_id(city_id):
+    """city by id"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)

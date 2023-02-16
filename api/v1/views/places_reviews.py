@@ -44,6 +44,7 @@ def places_review(place_id):
 
 @app_views.route(r6, methods=["GET", "PUT", "DELETE"], strict_slashes=False)
 def review_by_id(review_id):
+    """review by single id"""
     review = storage.get(Review, review_id)
     if not review:
         abort(404)
