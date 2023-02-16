@@ -154,8 +154,8 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Samson Akinola - [Github](https://github.com/Popsicool) / [email](akinolasamson1234@gmail.com)  
-Motselisi Leketa - [Github](https://github.com/Motselisi) / [email](motselisileketa@gmail.com)
+Samson Akinola - [Github](https://github.com/Popsicool) / akinolasamson1234@gmail.com  
+Motselisi Leketa - [Github](https://github.com/Motselisi) / motselisileketa@gmail.com
 
 ## License
 Public Domain. No copy write protection. 
