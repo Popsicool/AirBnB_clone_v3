@@ -44,6 +44,7 @@ def city_places(city_id):
 
 @app_views.route(r4, methods=["GET", "PUT", "DELETE"], strict_slashes=False)
 def place_by_id(place_id):
+    """ place by id"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -67,6 +68,7 @@ def place_by_id(place_id):
 @app_views.route("/places_search", methods=["POST"],
                  strict_slashes=False)
 def places_search():
+    """place search"""
     if request.method == "POST":
         body = request.get_json()
         if not body:
