@@ -57,7 +57,7 @@ def place_by_id(place_id):
                 setattr(place, k, v)
                 # body[k] = v
         storage.save()
-        return jsonify(city.to_dict())
+        return jsonify(place.to_dict())
     if request.method == "DELETE":
         place.delete()
         storage.save()
