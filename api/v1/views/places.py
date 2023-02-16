@@ -74,8 +74,8 @@ def places_search():
         if not body:
             return make_response(jsonify({"error": "Not a JSON"}), 400)
         if not body or not len(body) or (
-                not body.get("states") and not body.get("cities")
-                and not body.get("amenities")):
+                not body.get("states") and not body.get("cities") and
+                not body.get("amenities")):
             all_places = storage.all("Place")
             plc_all = []
             for k, v in all_places.items():
