@@ -65,60 +65,59 @@ def place_by_id(place_id):
     return jsonify(place.to_dict())
 
 
-@app_views.route("/places_search", methods=["POST", "GET"],
+@app_views.route("/places_search", methods=["POST"],
                  strict_slashes=False)
 def places_search():
     """place search"""
-    if request.method == "POST":
-        body = request.get_json()
-        if not body:
-            return make_response(jsonify({"error": "Not a JSON"}), 400)
-        if not body or not len(body) or (
-                not body.get("states") and not body.get("cities") and
-                not body.get("amenities")):
-            all_places = storage.all("Place")
-            plc_all = []
-            for k, v in all_places.items():
-                plc_all.append(v.to_dict())
-            return jsonify(plc_all)
-        response = []
-        states = body.get("states")
-        if states:
-            all_states = []
-            for id in states:
-                all_states.append(storage.get(State, id))
-            for st in all_states:
-                if st:
-                    for city in st.cities:
-                        if city:
-                            for place in city.places:
-                                response.append(place)
-        cities = body.get("cities")
-        if cities:
-            all_cities = []
-            for id in cities:
-                all_cities.append(storage.get(City, id))
-            for cty in all_cities:
-                if cty:
-                    for place in cty.places:
-                        if place not in response:
+    body = request.get_json()
+    if body is None:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    if not body or not len(body) or (
+            not body.get("states") and not body.get("cities") and
+            not body.get("amenities")):
+        all_places = storage.all("Place")
+        plc_all = []
+        for k, v in all_places.items():
+            plc_all.append(v.to_dict())
+        return jsonify(plc_all)
+    response = []
+    states = body.get("states")
+    if states:
+        all_states = []
+        for id in states:
+            all_states.append(storage.get(State, id))
+        for st in all_states:
+            if st:
+                for city in st.cities:
+                    if city:
+                        for place in city.places:
                             response.append(place)
-        amenities = body.get("amenities")
-        if amenities:
-            if not response:
-                all_places = storage.all("Place")
-                for k, v in all_places.items():
-                    amenities.append(v.to_dict())
-            amenity_list = []
-            for id in amenities:
-                amenity_list.append(storage.get(Amenity, id))
-            response = [place for place in response
-                        if all([amen in place.amenities
-                               for amen in amenities_list])]
-        result = []
-        for plc in response:
-            plc_dic = plc.to_dict()
-            plc_dic.pop('amenities', None)
-            result.append(plc_dic)
+    cities = body.get("cities")
+    if cities:
+        all_cities = []
+        for id in cities:
+            all_cities.append(storage.get(City, id))
+        for cty in all_cities:
+            if cty:
+                for place in cty.places:
+                    if place not in response:
+                        response.append(place)
+    amenities = body.get("amenities")
+    if amenities:
+        if not response:
+            all_places = storage.all("Place")
+            for k, v in all_places.items():
+                amenities.append(v.to_dict())
+        amenity_list = []
+        for id in amenities:
+            amenity_list.append(storage.get(Amenity, id))
+        response = [place for place in response
+                    if all([amen in place.amenities
+                            for amen in amenities_list])]
+    result = []
+    for plc in response:
+        plc_dic = plc.to_dict()
+        plc_dic.pop('amenities', None)
+        result.append(plc_dic)
 
-        return jsonify(result)
+    return jsonify(result)
